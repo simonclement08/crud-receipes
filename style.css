@@ -1,0 +1,16 @@
+#intro-example {
+    height: 200px;
+    background-image: url('https://s3-eu-west-1.amazonaws.com/images-ca-1-0-1-eu/tag_photos/original/10480/cuisine-chinoise-tag-AdobeStock_115262838.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#content-header {
+    background-color: black;
+}
+
+@media (min-width: 992px) {
+    #intro-example {
+        height: 400px;
+    }
+}

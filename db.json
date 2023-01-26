@@ -1,0 +1,76 @@
+{
+  "receipes": [
+    {
+      "id": 1,
+      "name": "Poulet coco",
+      "nb_part": 4,
+      "description": "Poulet au lait de Coco avec du riz et gambas",
+      "link": "https://www.youtube.com",
+      "ingredients": [
+        {
+          "name": "Poulet",
+          "quantity": 1,
+          "unit": "kg"
+        },
+        {
+          "name": "Lait de coco",
+          "quantity": 250,
+          "unit": "ml"
+        },
+        {
+          "name": "Riz",
+          "quantity": 1,
+          "unit": "kg"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Poulet gingembre",
+      "nb_part": 4,
+      "description": "Poulet au Gingembre avec du riz et gambas",
+      "link": "https://www.youtube.com",
+      "ingredients": [
+        {
+          "name": "Poulet",
+          "quantity": 1,
+          "unit": "kg"
+        },
+        {
+          "name": "Gingembre",
+          "quantity": 250,
+          "unit": "g"
+        },
+        {
+          "name": "Riz",
+          "quantity": 1,
+          "unit": "kg"
+        }
+      ]
+    },
+    {
+      "name": "Pates bolo",
+      "nb_part": "2",
+      "description": "Pates fraiche avec saule bologanise",
+      "link": "www.youtube.com",
+      "ingredients": [
+        {
+          "name": "pates",
+          "quantity": "100",
+          "unit": "g"
+        },
+        {
+          "name": "sauce tomate",
+          "quantity": "50",
+          "unit": "ml"
+        },
+        {
+          "name": "beurre",
+          "quantity": "100",
+          "unit": "g"
+        }
+      ],
+      "id": 3
+    }
+  ]
+}
