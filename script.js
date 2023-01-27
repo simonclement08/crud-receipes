@@ -1,19 +1,45 @@
 
+function setReceipeJson(){
+    let names = document.querySelectorAll("[name='ingredientsName[]']");
+    let quatities = document.querySelectorAll("[name='ingredientsQuantity[]']");
+    let units = document.querySelectorAll("[name='ingredientsUnity[]']");
+    let ingredients = [];
+    for (let i = 0; i < names.length; i++) {
+        let ingredient = { name: names[i].value, quantity: quatities[i].value, unit: units[i].value};
+        ingredients.push(ingredient)
+    }
+
+    return JSON.stringify({
+        name: document.getElementById('inputName').value,
+        nb_part: document.getElementById('inputNbPart').value,
+        description: document.getElementById('inputDescription').value,
+        link : document.getElementById('inputLink').value,
+        ingredients : ingredients,
+    })
+}
+
 function initList(){
     fetch('http://localhost:3000/receipes')
     .then(response => response.json())
     .then(receipes => {
-        let table= document.getElementById('receipes')
+        let div= document.getElementById('receipes')
         receipes.forEach(receipe => {
-            table.innerHTML +=`<tr id="receipe` + receipe.id + `">
-                    <th scope="row">` + receipe.name + `</th>
-                    <td>` + receipe.nb_part + `</td>
-                    <td>` + receipe.description + `</td>
-                    <td><a href="` + receipe.link + `">Voir lien</a></td>
-                    <td><a class="btn btn-warning" href=edit.html?id=` + receipe.id + `>Modifier</a></td>
-                    <td><button type="button" class="btn btn-danger" onclick="remove(` + receipe.id + `)">Supprimer</button></td>
-                </tr>
-            `
+            div.innerHTML +=`<div id="receipe` + receipe.id + `" class="col-10 col-sm-4 col-md-4 col-lg-3 col-xl-2 receipe m-2">
+                <img src="` + receipe.link + `" class="img_receipe" alt="Image recette">
+                <div class="content_receipe">
+                    <h3>` + receipe.name + `</h3>
+                    <p>` + receipe.nb_part + ` <img class="nb_part" src="https://cdn-icons-png.flaticon.com/512/5874/5874704.png" alt="Logo nombre personne"></p>
+                    <p>` + receipe.description + `</p>
+                </div>
+                <div class="action_receipe">
+                    <a href=edit.html?id=` + receipe.id + `>
+                        <img src="https://cdn-icons-png.flaticon.com/512/781/781054.png" alt="Modifier" class="img_action">
+                    </a>
+                    <a type="button" onclick="remove(` + receipe.id + `)">
+                        <img src="https://cdn.pixabay.com/photo/2014/04/02/10/44/cross-mark-304374_960_720.png" alt="Modifier" class="img_action">
+                    </a>
+                </div>
+            </div>`
         });
     })
 }
@@ -24,7 +50,6 @@ function initEdit(){
     fetch('http://localhost:3000/receipes/' + id)
     .then(response => response.json())
     .then(receipe => {
-        console.log(receipe.ingredients)
         document.getElementById('submit').onclick = function(){update(receipe.id)};
         document.getElementById('inputName').value = receipe.name
         document.getElementById('inputNbPart').value = receipe.nb_part
@@ -35,62 +60,33 @@ function initEdit(){
         }
         let btn = document.getElementsByClassName("btnSupp");
         btn[0].parentElement.innerHTML =  `<div class="col-6" id="lstIngredientsBtn">
-        <button class="btn btn-secondary" onclick="addIngredient()">+</button>
-    </div>` ;
+            <button class="btn btn-secondary" onclick="addIngredient()">+</button>
+        </div>` ;
     })
 }
 
 function add(){
-    let names = document.querySelectorAll("[name='ingredientsName[]']");
-    let quatities = document.querySelectorAll("[name='ingredientsQuantity[]']");
-    let units = document.querySelectorAll("[name='ingredientsUnity[]']");
-    let ingredients = [];
-    for (let i = 0; i < names.length; i++) {
-        let ingredient = { name: names[i].value, quantity: quatities[i].value, unit: units[i].value};
-        ingredients.push(ingredient)
-    }
-
     fetch('http://localhost:3000/receipes', {
         method: 'POST',
-        body: JSON.stringify({
-            name: document.getElementById('inputName').value,
-            nb_part: document.getElementById('inputNbPart').value,
-            description: document.getElementById('inputDescription').value,
-            link : document.getElementById('inputLink').value,
-            ingredients : ingredients,
-        }),
+        body: setReceipeJson(),
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
         },
     })
-        .then((response) => response.json())
-        .then((json) => console.log(json));
+    .then((response) => response.json())
+    .then((json) => console.log(json));
 }
 
 function update(id) {
-    let names = document.querySelectorAll("[name='ingredientsName[]']");
-    let quatities = document.querySelectorAll("[name='ingredientsQuantity[]']");
-    let units = document.querySelectorAll("[name='ingredientsUnity[]']");
-    let ingredients = [];
-    for (let i = 0; i < names.length; i++) {
-        let ingredient = { name: names[i].value, quantity: quatities[i].value, unit: units[i].value};
-        ingredients.push(ingredient)
-    }
     fetch('http://localhost:3000/receipes/' + id, {
     method: 'PUT',
-    body: JSON.stringify({
-        name: document.getElementById('inputName').value,
-        nb_part: document.getElementById('inputNbPart').value,
-        description: document.getElementById('inputDescription').value,
-        link : document.getElementById('inputLink').value,
-        ingredients : ingredients,
-    }),
+    body: setReceipeJson(),
     headers: {
         'Content-type': 'application/json; charset=UTF-8',
     },
-})
-  .then((response) => response.json())
-  .then((json) => console.log(json));
+    })
+    .then((response) => response.json())
+    .then((json) => console.log(json));
 }
 
 function remove(id){
